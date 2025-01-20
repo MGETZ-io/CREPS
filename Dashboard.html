@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kunden Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #eaeaea;
+        }
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            width: 90%;
+            max-width: 1200px;
+        }
+        .grid-item {
+            background: #007bff;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .no-data {
+            grid-column: span 2;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container" id="aktenContainer">
+        <div class="grid-item no-data">Daten werden geladen...</div>
+    </div>
+    <script>
+        // Beispielhafte Kundennummern und Aktenzeichen
+        const kundenDaten = {
+            "12345": ["Aktenzeichen A-001", "Aktenzeichen A-002", "Aktenzeichen A-003"],
+            "67890": ["Aktenzeichen B-101", "Aktenzeichen B-102"],
+            "54321": ["Aktenzeichen C-201", "Aktenzeichen C-202", "Aktenzeichen C-203", "Aktenzeichen C-204"],
+        };
+
+        // Kundennummer aus der URL abrufen
+        const params = new URLSearchParams(window.location.search);
+        const customerId = params.get('kundennummer');
+
+        const container = document.getElementById('aktenContainer');
+        container.innerHTML = ''; // Vorherige Inhalte leeren
+
+        if (customerId && kundenDaten[customerId]) {
+            kundenDaten[customerId].forEach(akten => {
+                const item = document.createElement('div');
+                item.className = 'grid-item';
+                item.textContent = akten;
+                container.appendChild(item);
+            });
+        } else {
+            container.innerHTML = '<div class="grid-item no-data">Keine Aktenzeichen für diese Kundennummer gefunden.</div>';
+        }
+    </script>
+</body>
+</html>
