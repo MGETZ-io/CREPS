@@ -14,7 +14,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #eaeaea;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
         }
         .dashboard-container {
             display: grid;
@@ -24,18 +24,28 @@
             max-width: 1200px;
         }
         .grid-item {
-            background: #007bff;
-            color: white;
             padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
             text-align: center;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .grid-item:nth-child(odd) {
+            background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+        }
+        .grid-item:nth-child(even) {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+        }
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         .no-data {
             grid-column: span 2;
-            text-align: center;
             font-size: 1.2rem;
-            color: #555;
+            color: #333;
         }
     </style>
 </head>
@@ -51,12 +61,10 @@
             "54321": ["Aktenzeichen C-201", "Aktenzeichen C-202", "Aktenzeichen C-203", "Aktenzeichen C-204"],
         };
 
-        // Kundennummer aus der URL abrufen
         const params = new URLSearchParams(window.location.search);
         const customerId = params.get('kundennummer');
-
         const container = document.getElementById('aktenContainer');
-        container.innerHTML = ''; // Vorherige Inhalte leeren
+        container.innerHTML = '';
 
         if (customerId && kundenDaten[customerId]) {
             kundenDaten[customerId].forEach(akten => {
